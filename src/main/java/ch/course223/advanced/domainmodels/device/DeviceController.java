@@ -25,10 +25,4 @@ public class DeviceController {
         this.deviceMapper = deviceMapper;
     }
 
-    // This endpoint retrieves all devices for a single user
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('USER_SEE')")
-    public ResponseEntity<List<DeviceDTO>> getDevicesByUserId(@PathVariable String id) {
-        return new ResponseEntity<>(deviceMapper.toDTOs(deviceService.findDeviceByUserId(id)));
-    }
 }

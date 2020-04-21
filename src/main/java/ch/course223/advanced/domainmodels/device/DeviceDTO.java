@@ -3,11 +3,13 @@ package ch.course223.advanced.domainmodels.device;
 import ch.course223.advanced.core.ExtendedDTO;
 import ch.course223.advanced.domainmodels.user.User;
 
+import java.time.LocalDate;
+
 public class DeviceDTO extends ExtendedDTO {
 
     private String telegramID;
 
-    private User user;
+    private LocalDate createdAt;
 
     public DeviceDTO() {}
 
@@ -20,12 +22,12 @@ public class DeviceDTO extends ExtendedDTO {
         return this;
     }
 
-    public User getUser() {
-        return user;
+    public LocalDate getCreatedAt() {
+        return createdAt;
     }
 
-    public DeviceDTO setUser(User user) {
-        this.user = user;
+    public DeviceDTO setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 }

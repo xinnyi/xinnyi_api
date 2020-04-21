@@ -13,4 +13,6 @@ public interface UserRepository extends ExtendedJpaRepository<User> {
     @Transactional
     @Query(nativeQuery = true, value = "select * from public.users where email = ? and enabled = 1")
     Optional<User> findByEmail(String email);
+
+
 }

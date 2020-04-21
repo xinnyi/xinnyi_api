@@ -4,35 +4,40 @@ import ch.course223.advanced.core.ExtendedEntity;
 import ch.course223.advanced.domainmodels.user.User;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table (name = "device")
 public class Device extends ExtendedEntity {
 
-    @Column (name = "telegram_id")
-    private String telegramID;
+    @Column (name = "messenger_id")
+    private String messengerID;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    @Column (name = "created_at")
+    private LocalDate createdAt;
 
     public Device() {}
 
-    public String getTelegramID() {
-        return telegramID;
+    public Device(String messengerID, LocalDate createdAt) {
+        this.messengerID = messengerID;
+        this.createdAt = LocalDate.now();
     }
 
-    public Device setTelegramID(String telegramID) {
-        this.telegramID = telegramID;
+    public String getMessengerID() {
+        return messengerID;
+    }
+
+    public Device setMessengerID(String telegramID) {
+        this.messengerID = telegramID;
         return this;
     }
 
-    public User getUser() {
-        return user;
+    public LocalDate getCreatedAt() {
+        return createdAt;
     }
 
-    public Device setUser(User user) {
-        this.user = user;
+    public Device setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 }
