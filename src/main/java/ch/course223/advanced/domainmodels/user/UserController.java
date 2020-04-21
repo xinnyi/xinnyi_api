@@ -1,5 +1,9 @@
 package ch.course223.advanced.domainmodels.user;
 
+import ch.course223.advanced.domainmodels.device.Device;
+import ch.course223.advanced.domainmodels.device.DeviceDTO;
+import ch.course223.advanced.domainmodels.device.DeviceService;
+import ch.course223.advanced.domainmodels.device.mapper.DeviceMapper;
 import ch.course223.advanced.domainmodels.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,17 +20,22 @@ public class UserController {
 
     private UserService userService;
     private UserMapper userMapper;
+    private DeviceService deviceService;
+    private DeviceMapper deviceMapper;
+
 
     @Autowired
-    public UserController(UserService userService, UserMapper userMapper) {
+    public UserController(UserService userService, UserMapper userMapper, DeviceService deviceService, DeviceMapper deviceMapper) {
         this.userService = userService;
         this.userMapper = userMapper;
+        this.deviceService = deviceService;
+        this.deviceMapper = deviceMapper;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{userId}")
     @PreAuthorize("hasAuthority('USER_SEE')")
-    public ResponseEntity<UserDTO> findById(@PathVariable String id) {
-        User user = userService.findById(id);
+    public ResponseEntity<UserDTO> findById(@PathVariable String userId) {
+        User user = userService.findById(userId);
         return new ResponseEntity<>(userMapper.toDTO(user), HttpStatus.OK);
     }
 
@@ -44,17 +53,24 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{userId}")
     @PreAuthorize("hasAuthority('USER_MODIFY')")
-    public ResponseEntity<UserDTO> updateById(@PathVariable String id, @Valid @RequestBody UserDTO userDTO) {
-        User user = userService.updateById(id, userMapper.fromDTO(userDTO));
+    public ResponseEntity<UserDTO> updateById(@PathVariable String userId, @Valid @RequestBody UserDTO userDTO) {
+        User user = userService.updateById(userId, userMapper.fromDTO(userDTO));
         return new ResponseEntity<>(userMapper.toDTO(user), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{userId}")
     @PreAuthorize("hasAuthority('USER_DELETE')")
-    public ResponseEntity<Void> deleteById(@PathVariable String id) {
-        userService.deleteById(id);
+    public ResponseEntity<Void> deleteById(@PathVariable String userId) {
+        userService.deleteById(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // This endpoint retrieves all devices for a single user
+    @GetMapping("/{userId}/devices")
+    //@PreAuthorize("hasAuthority('DEVICE_SEE')")
+    public ResponseEntity<List<DeviceDTO>> getDevicesByUserId(@PathVariable String userId) {
+        return new ResponseEntity<>(deviceMapper.toDTOs(deviceService.findDevicesByUserId(userId)));
     }
 }

@@ -65,6 +65,14 @@ public abstract class ExtendedServiceImpl<T extends ExtendedEntity> implements E
 		}
 	}
 
+	protected List<T> findOrReturnNull(Optional<List<T>> optional) {
+		if(optional.isPresent()) {
+			return optional.get();
+		} else {
+			return null;
+		}
+	}
+
 	protected void checkUpdatedEntityId(String id, T entity) throws BadRequestException {
 
 		if(entity.getId() != null) {

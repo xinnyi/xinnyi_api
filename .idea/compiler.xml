@@ -10,6 +10,9 @@
         <module name="advanced.main" />
       </profile>
     </annotationProcessing>
+<<<<<<< HEAD
     <bytecodeTargetLevel target="11" />
+=======
+>>>>>>> ft_deviceModell
   </component>
 </project>
