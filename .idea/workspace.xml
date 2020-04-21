@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a52260d2-97a7-4fab-bdc2-e722398fb947" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/course223/advanced/core/ExtendedEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/course223/advanced/core/ExtendedEntity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +114,7 @@
       <option name="presentableId" value="Default" />
       <updated>1587458363184</updated>
       <workItem from="1587458367526" duration="6164000" />
-      <workItem from="1587482195543" duration="671000" />
+      <workItem from="1587482195543" duration="1240000" />
     </task>
     <servers />
   </component>

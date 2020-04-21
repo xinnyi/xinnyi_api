@@ -13,8 +13,8 @@ import javax.persistence.MappedSuperclass;
 public abstract class ExtendedEntity {
 
 	@Id
-	@GeneratedValue(generator = "uuid2")
-	@GenericGenerator(name = "uuid2", strategy = "uuid2")
+	@GeneratedValue(generator = "system-uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
 	@Generated(GenerationTime.ALWAYS)
 	@Column(name = "id")
 	private String id;
