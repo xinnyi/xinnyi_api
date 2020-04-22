@@ -1,8 +1,7 @@
 package ch.course223.advanced.domainmodels.telegram;
 
 import ch.course223.advanced.domainmodels.device.Device;
-import ch.course223.advanced.domainmodels.device.DeviceService;
-import ch.course223.advanced.domainmodels.deviceregistration.DeviceLinkingTokenService;
+import ch.course223.advanced.domainmodels.devicelinkingtoken.DeviceLinkingTokenService;
 import ch.course223.advanced.domainmodels.user.User;
 import ch.course223.advanced.domainmodels.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
