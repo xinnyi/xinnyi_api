@@ -71,6 +71,6 @@ public class UserController {
     @GetMapping("/{userId}/devices")
     //@PreAuthorize("hasAuthority('DEVICE_SEE')")
     public ResponseEntity<List<DeviceDTO>> getDevicesByUserId(@PathVariable String userId) {
-        return new ResponseEntity<>(deviceMapper.toDTOs(deviceService.findDevicesByUserId(userId)));
+        return new ResponseEntity<>(deviceMapper.toDTOs(userService.findById(userId).getDevices()),HttpStatus.OK);
     }
 }

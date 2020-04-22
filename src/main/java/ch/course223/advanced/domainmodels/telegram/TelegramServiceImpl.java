@@ -6,11 +6,13 @@ import ch.course223.advanced.domainmodels.deviceregistration.DeviceLinkingTokenS
 import ch.course223.advanced.domainmodels.user.User;
 import ch.course223.advanced.domainmodels.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Service
 public class TelegramServiceImpl implements TelegramService {
 
     private DeviceLinkingTokenService deviceLinkingTokenService;

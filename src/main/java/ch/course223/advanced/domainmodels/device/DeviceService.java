@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface DeviceService extends ExtendedService<Device> {
 
-    List<Device> findDevicesByUserId (String userId);
 
 }

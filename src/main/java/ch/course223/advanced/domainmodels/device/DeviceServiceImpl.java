@@ -15,20 +15,11 @@ import java.util.NoSuchElementException;
 @Service
 public class DeviceServiceImpl extends ExtendedServiceImpl<Device> implements DeviceService {
 
-    public UserService userService;
 
     @Autowired
-    public DeviceServiceImpl(ExtendedJpaRepository<Device> repository, UserService userService) {
+    public DeviceServiceImpl(ExtendedJpaRepository<Device> repository) {
         super(repository);
-        this.userService = userService;
     }
 
-    @Override
-    public List<Device> findDevicesByUserId(String userId) {
-        if (userService.existsById(userId)) {
-            return findOrReturnNull(((DeviceRepository) repository).findDevicesByUser(userService.findById(userId)));
-        } else {
-            throw new NoSuchElementException("User not present");
-        }
-    }
+
 }
