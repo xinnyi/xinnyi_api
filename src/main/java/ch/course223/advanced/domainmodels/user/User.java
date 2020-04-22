@@ -50,7 +50,7 @@ public class User extends ExtendedEntity {
     )
     private Set<Role> roles;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Column (name = "devices")
     private List<Device> devices;
 
@@ -140,6 +140,15 @@ public class User extends ExtendedEntity {
 
     public User setRoles(Set<Role> roles) {
         this.roles = roles;
+        return this;
+    }
+
+    public List<Device> getDevices() {
+        return devices;
+    }
+
+    public User setDevices(List<Device> devices) {
+        this.devices = devices;
         return this;
     }
 }

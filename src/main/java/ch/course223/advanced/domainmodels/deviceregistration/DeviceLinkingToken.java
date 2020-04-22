@@ -22,7 +22,7 @@ public class DeviceLinkingToken extends ExtendedEntity {
     @Column(name = "token_expiration_date")
     private LocalDate tokenExpirationDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
