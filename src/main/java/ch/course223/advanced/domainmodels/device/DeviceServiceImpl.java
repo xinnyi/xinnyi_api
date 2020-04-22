@@ -15,11 +15,9 @@ import java.util.NoSuchElementException;
 @Service
 public class DeviceServiceImpl extends ExtendedServiceImpl<Device> implements DeviceService {
 
-
     @Autowired
     public DeviceServiceImpl(ExtendedJpaRepository<Device> repository) {
         super(repository);
     }
-
 
 }
