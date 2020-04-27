@@ -73,11 +73,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		http.cors().and().csrf().disable().
 				authorizeRequests()
-				.antMatchers("/welcome", "/login", "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html",
-						"/webjars/**", "/swagger.yaml", "/**")
+				// These end points are permitted without login
+				.antMatchers("/login", "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html",
+						"/webjars/**", "/swagger.yaml", "/users")
 				.permitAll()
 				.anyRequest().authenticated().and()
+				// From here on out all requests will be filtered by the authorization of the authenticated user
 				.addFilterAfter(
+						// The filter itself
 						new JWTAuthenticationFilter(
 								new AntPathRequestMatcher("/login", "POST"),
 								authenticationManagerBean(),
@@ -87,6 +90,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.addFilterAfter(
 						new JWTAuthorizationFilter(userService, propertyReader), UsernamePasswordAuthenticationFilter.class)
 				.sessionManagement()
+				// This line ensures that this application is indeed stateless
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	

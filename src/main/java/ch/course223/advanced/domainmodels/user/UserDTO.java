@@ -16,6 +16,12 @@ public class UserDTO extends ExtendedDTO {
 
     private Set<RoleDTO> roles;
 
+    private boolean enabled;
+
+    private boolean locked;
+
+    private String password;
+
     public UserDTO() {
     }
 
@@ -64,5 +70,29 @@ public class UserDTO extends ExtendedDTO {
     public UserDTO setRoles(Set<RoleDTO> roles) {
         this.roles = roles;
         return this;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
