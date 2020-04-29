@@ -26,6 +26,9 @@ public class DeviceLinkingToken extends ExtendedEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    public DeviceLinkingToken() {
+    }
+
     public DeviceLinkingToken(User user) {
         this.user = user;
         this.tokenExpirationDate = LocalDate.now().plusDays(1);
