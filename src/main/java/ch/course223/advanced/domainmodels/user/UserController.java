@@ -48,9 +48,9 @@ public class UserController {
 
     @PostMapping("")
     @PreAuthorize("hasAuthority('USER_CREATE')")
-    public ResponseEntity<UserDTO> create(@Valid @RequestBody UserDTO user) {
-        user = userMapper.toDTO(userService.save(userMapper.fromDTO(user)));
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    public ResponseEntity<UserDTO> create(@Valid @RequestBody User user) {
+        userService.save(user);
+        return new ResponseEntity<>(userMapper.toDTO(user), HttpStatus.CREATED);
     }
 
     @PutMapping("/{userId}")
@@ -71,6 +71,6 @@ public class UserController {
     @GetMapping("/{userId}/devices")
     //@PreAuthorize("hasAuthority('DEVICE_SEE')")
     public ResponseEntity<List<DeviceDTO>> getDevicesByUserId(@PathVariable String userId) {
-        return new ResponseEntity<>(deviceMapper.toDTOs(deviceService.findDevicesByUserId(userId)));
+        return new ResponseEntity<>(deviceMapper.toDTOs(userService.findById(userId).getDevices()),HttpStatus.OK);
     }
 }

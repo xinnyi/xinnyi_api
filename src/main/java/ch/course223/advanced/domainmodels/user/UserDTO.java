@@ -65,4 +65,5 @@ public class UserDTO extends ExtendedDTO {
         this.roles = roles;
         return this;
     }
+
 }
