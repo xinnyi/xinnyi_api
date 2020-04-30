@@ -13,8 +13,13 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
+<<<<<<< HEAD
     date = "2020-04-29T14:09:48+0200",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 13.0.2 (Oracle Corporation)"
+=======
+    date = "2020-04-29T13:53:55+0200",
+    comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11.0.2 (Oracle Corporation)"
+>>>>>>> 069939e57a340439766008e4f2b91ffe2d83ba47
 )
 @Component
 public class RoleMapperExtendedImpl implements RoleMapperExtended {
