@@ -20,4 +20,15 @@ public class DeviceServiceImpl extends ExtendedServiceImpl<Device> implements De
         super(repository);
     }
 
+
+    @Override
+    public Device findByMessengerID(String messengerID) {
+        return findOrThrow(((DeviceRepository)repository).findByMessengerID(messengerID));
+    }
+
+    @Override
+    public List<Device> getAllDevices() {
+        List<Device> deviceList = ((DeviceRepository)repository).findAll();
+        return deviceList;
+    }
 }
