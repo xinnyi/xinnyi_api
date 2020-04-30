@@ -32,6 +32,9 @@ public class DeviceLinkingToken extends ExtendedEntity {
 
     }
 
+    public DeviceLinkingToken() {
+    }
+
     public String getToken() {
         return token;
     }
