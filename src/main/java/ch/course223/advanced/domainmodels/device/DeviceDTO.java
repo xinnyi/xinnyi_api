@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 public class DeviceDTO extends ExtendedDTO {
 
-    private String telegramID;
+    private String messengerId;
 
     private LocalDate createdAt;
 
@@ -15,12 +15,12 @@ public class DeviceDTO extends ExtendedDTO {
 
     public DeviceDTO() {}
 
-    public String getTelegramID() {
-        return telegramID;
+    public String getMessengerId() {
+        return messengerId;
     }
 
-    public DeviceDTO setTelegramID(String telegramID) {
-        this.telegramID = telegramID;
+    public DeviceDTO setMessengerId(String messengerId) {
+        this.messengerId = messengerId;
         return this;
     }
 
@@ -33,3 +33,4 @@ public class DeviceDTO extends ExtendedDTO {
         return this;
     }
 }
+

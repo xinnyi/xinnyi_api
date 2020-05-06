@@ -1,4 +1,4 @@
-package ch.course223.advanced.domainmodels.telegram;
+package ch.course223.advanced.domainmodels.messenger;
 
 import ch.course223.advanced.config.RabbitMqService;
 import ch.course223.advanced.domainmodels.device.Device;
@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 @Service
-public class TelegramServiceImpl implements TelegramService {
+public class MessengerServiceImpl implements MessengerService {
 
     private DeviceLinkingTokenService deviceLinkingTokenService;
 
@@ -27,17 +27,17 @@ public class TelegramServiceImpl implements TelegramService {
     private RabbitMqService rabbitMqService;
 
     @Autowired
-    public TelegramServiceImpl(DeviceLinkingTokenService deviceLinkingTokenService, UserService userService) {
+    public MessengerServiceImpl(DeviceLinkingTokenService deviceLinkingTokenService, UserService userService) {
         this.deviceLinkingTokenService = deviceLinkingTokenService;
         this.userService = userService;
     }
 
     @Override
-    public void linkDeviceToUser(String telegramUserId, String deviceLinkingToken) {
+    public void linkDeviceToUser(String messengerUserId, String deviceLinkingToken) {
         if (deviceLinkingTokenService.existsById(deviceLinkingToken)) {
             User userToLink = deviceLinkingTokenService.findById(deviceLinkingToken).getUser();
             List<Device> currentDevices = userToLink.getDevices();
-            currentDevices.add(new Device(telegramUserId, LocalDate.now()));
+            currentDevices.add(new Device(messengerUserId, LocalDate.now()));
             userToLink.setDevices(currentDevices);
             userService.updateById(userToLink.getId(), userToLink);
         } else {
@@ -47,13 +47,13 @@ public class TelegramServiceImpl implements TelegramService {
 
     /*
     @Override
-    public void addWithTelegramUserId(String telegramUserId, String url, LocalDateTime timestamp) {
+    public void addWithMessengerUserId(String messengerUserId, String url, LocalDateTime timestamp) {
         try {
-            User user = userService.findByDevices(telegramUserId);
+            User user = userService.findByDevices(messengerUserId);
             this.addWithUserId(user.getId(), url, timestamp);
         } catch (NoSuchElementException e) {
             throw new NoSuchElementException("Your Telegram Account is not yet linked to an Account.");
-            // throw new TelegramExeception("Your Telegram Account is not yet linked to an Account.");
+            // throw new MessengerExeception("Your Telegram Account is not yet linked to an Account.");
         }
     }
 

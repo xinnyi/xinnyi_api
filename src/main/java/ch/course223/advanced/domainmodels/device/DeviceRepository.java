@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface DeviceRepository extends ExtendedJpaRepository<Device> {
 
-    Optional<Device> findByMessengerID (String messengerID);
+    Optional<Device> findByMessengerId (String messengerId);
 }

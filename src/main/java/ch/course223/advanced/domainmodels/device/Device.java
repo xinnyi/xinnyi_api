@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class Device extends ExtendedEntity {
 
     @Column (name = "messenger_id")
-    private String messengerID;
+    private String messengerId;
 
     @Column (name = "created_at")
     private LocalDate createdAt;
@@ -22,22 +22,22 @@ public class Device extends ExtendedEntity {
     public Device() {}
 
     public Device(String messengerID, LocalDate createdAt) {
-        this.messengerID = messengerID;
+        this.messengerId = messengerID;
         this.createdAt = LocalDate.now();
     }
 
     public Device(String messengerID, LocalDate createdAt, User user) {
-        this.messengerID = messengerID;
+        this.messengerId = messengerID;
         this.createdAt = createdAt;
         this.user = user;
     }
 
     public String getMessengerID() {
-        return messengerID;
+        return messengerId;
     }
 
     public Device setMessengerID(String telegramID) {
-        this.messengerID = telegramID;
+        this.messengerId = telegramID;
         return this;
     }
 

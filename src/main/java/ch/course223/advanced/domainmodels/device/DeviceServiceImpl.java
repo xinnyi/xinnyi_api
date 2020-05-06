@@ -22,8 +22,8 @@ public class DeviceServiceImpl extends ExtendedServiceImpl<Device> implements De
 
 
     @Override
-    public Device findByMessengerID(String messengerID) {
-        return findOrThrow(((DeviceRepository)repository).findByMessengerID(messengerID));
+    public Device findByMessengerId(String messengerId) {
+        return findOrThrow(((DeviceRepository)repository).findByMessengerId(messengerId));
     }
 
     @Override
