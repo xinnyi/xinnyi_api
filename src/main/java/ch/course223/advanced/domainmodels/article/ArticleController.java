@@ -25,8 +25,8 @@ public class ArticleController {
     }
 
     @PostMapping("/{url}/{messengerUserId}")
-    public ResponseEntity<Void> addWithMessengerUserId(@PathVariable String url, @PathVariable String messengerUserId, LocalDateTime localDateTime) {
-        articleService.addWithMessengerUserId(messengerUserId, url, localDateTime);
+    public ResponseEntity<Void> addWithMessengerUserId(@PathVariable String url, @PathVariable String messengerUserId) {
+        articleService.addWithMessengerUserId(messengerUserId, url);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
