@@ -16,11 +16,20 @@ public class Device extends ExtendedEntity {
     @Column (name = "created_at")
     private LocalDate createdAt;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private User user;
+
     public Device() {}
 
     public Device(String messengerID, LocalDate createdAt) {
         this.messengerID = messengerID;
         this.createdAt = LocalDate.now();
+    }
+
+    public Device(String messengerID, LocalDate createdAt, User user) {
+        this.messengerID = messengerID;
+        this.createdAt = createdAt;
+        this.user = user;
     }
 
     public String getMessengerID() {
@@ -39,5 +48,13 @@ public class Device extends ExtendedEntity {
     public Device setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
         return this;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

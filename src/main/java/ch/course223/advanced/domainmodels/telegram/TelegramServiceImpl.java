@@ -45,6 +45,7 @@ public class TelegramServiceImpl implements TelegramService {
         }
     }
 
+    /*
     @Override
     public void addWithTelegramUserId(String telegramUserId, String url, LocalDateTime timestamp) {
         try {
@@ -64,4 +65,6 @@ public class TelegramServiceImpl implements TelegramService {
         payload.put("timestamp", timestamp.atOffset(ZoneOffset.UTC).format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
         rabbitMqService.publishToQueue(RabbitMqService.ARTICLE_QUEUE, gson.toJson(payload));
     }
+
+     */
 }
