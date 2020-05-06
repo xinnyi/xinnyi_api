@@ -5,13 +5,14 @@ import ch.course223.advanced.domainmodels.device.Device;
 import ch.course223.advanced.domainmodels.user.User;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "article")
 public class Article extends ExtendedEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private User user;
+    @Column(name = "user_id")
+    private String userId;
 
     @Column(name = "url")
     private String url;
@@ -19,20 +20,24 @@ public class Article extends ExtendedEntity {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Device device;
 
+    @Column (name = "timestamp")
+    private LocalDate timestamp;
+
     public Article(){}
 
-    public Article(User user, String url, Device device) {
-        this.user = user;
+    public Article(String userId, String url, Device device, LocalDate timestamp) {
+        this.userId = userId;
         this.url = url;
         this.device = device;
+        this.timestamp = timestamp;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUrl() {
@@ -49,5 +54,13 @@ public class Article extends ExtendedEntity {
 
     public void setDevice(Device device) {
         this.device = device;
+    }
+
+    public LocalDate getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDate timestamp) {
+        this.timestamp = timestamp;
     }
 }

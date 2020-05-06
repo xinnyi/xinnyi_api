@@ -29,9 +29,9 @@ public class ArticleServiceImpl extends ExtendedServiceImpl<Article> implements 
     }
 
     @Override
-    public void addWithTelegramUserId(String telegramUserId, String url, LocalDateTime timestamp) {
+    public void addWithMessengerUserId(String messengerUserId, String url, LocalDateTime timestamp) {
         try {
-            User user = userService.findByDevices(telegramUserId);
+            User user = userService.findByDevices(messengerUserId);
             this.addWithUserId(user.getId(), url, timestamp);
         } catch (NoSuchElementException e) {
             throw new NoSuchElementException("Your Telegram Account is not yet linked to an Account.");

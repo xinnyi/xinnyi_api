@@ -4,38 +4,38 @@ import ch.course223.advanced.core.ExtendedDTO;
 import ch.course223.advanced.domainmodels.device.Device;
 import ch.course223.advanced.domainmodels.user.User;
 
+import java.time.LocalDate;
 
 
 public class ArticleDTO extends ExtendedDTO {
 
-    private User user;
+    private String userId;
 
     private String url;
 
     private Device device;
 
+    private LocalDate timestamp;
+
     public ArticleDTO(){}
 
-
-    public ArticleDTO(User user, String url, Device device) {
-        this.user = user;
-        this.url = url;
-        this.device = device;
-    }
-
-    public ArticleDTO(String id, User user, String url, Device device) {
+    public ArticleDTO(String id) {
         super(id);
-        this.user = user;
+    }
+
+    public ArticleDTO(String userId, String url, Device device, LocalDate timestamp) {
+        this.userId = userId;
         this.url = url;
         this.device = device;
+        this.timestamp = timestamp;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUrl() {
