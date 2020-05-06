@@ -15,19 +15,16 @@ public class ArticleDTO extends ExtendedDTO {
 
     private Device device;
 
-    private LocalDate timestamp;
-
     public ArticleDTO(){}
 
     public ArticleDTO(String id) {
         super(id);
     }
 
-    public ArticleDTO(String userId, String url, Device device, LocalDate timestamp) {
+    public ArticleDTO(String userId, String url, Device device) {
         this.userId = userId;
         this.url = url;
         this.device = device;
-        this.timestamp = timestamp;
     }
 
     public String getUserId() {

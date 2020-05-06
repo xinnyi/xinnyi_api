@@ -21,7 +21,7 @@ public class RabbitMqService {
     public RabbitMqService() {
         connectionFactory = new ConnectionFactory();
         try {
-            connectionFactory.setUri("amqp://guest:guest@localhost"); //host noch ersetzen
+            connectionFactory.setUri("amqp://klemens.li:5672"); //host noch ersetzen
             Connection connection = getConnection();
             if (connection != null) {
                 Channel channel = connection.createChannel();

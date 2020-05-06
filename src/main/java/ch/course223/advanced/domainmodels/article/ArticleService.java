@@ -6,6 +6,6 @@ import java.time.LocalDateTime;
 
 public interface ArticleService extends ExtendedService<Article> {
 
-    void addWithMessengerUserId(String messengerUserId, String url, LocalDateTime timestamp);
-    void addWithUserId (String userId, String url, LocalDateTime timestamp);
+    void addWithMessengerUserId(String messengerUserId, String url);
+    void addWithUserId (String userId, String url);
 }

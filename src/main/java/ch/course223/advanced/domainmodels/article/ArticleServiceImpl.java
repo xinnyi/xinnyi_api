@@ -9,9 +9,6 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -29,10 +26,10 @@ public class ArticleServiceImpl extends ExtendedServiceImpl<Article> implements 
     }
 
     @Override
-    public void addWithMessengerUserId(String messengerUserId, String url, LocalDateTime timestamp) {
+    public void addWithMessengerUserId(String messengerUserId, String url) {
         try {
             User user = userService.findByDevices(messengerUserId);
-            this.addWithUserId(user.getId(), url, timestamp);
+            this.addWithUserId(user.getId(), url);
         } catch (NoSuchElementException e) {
             throw new NoSuchElementException("Your Telegram Account is not yet linked to an Account.");
             // throw new TelegramExeception("Your Telegram Account is not yet linked to an Account.");
@@ -40,11 +37,10 @@ public class ArticleServiceImpl extends ExtendedServiceImpl<Article> implements 
     }
 
     @Override
-    public void addWithUserId(String userId, String url, LocalDateTime timestamp) {
+    public void addWithUserId(String userId, String url) {
         Map<String, String> payload = new HashMap<>();
         Gson gson = new Gson();
         payload.put("userId", userId);
-        payload.put("timestamp", timestamp.atOffset(ZoneOffset.UTC).format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
         rabbitMqService.publishToQueue(RabbitMqService.ARTICLE_QUEUE, gson.toJson(payload));
     }
 }
