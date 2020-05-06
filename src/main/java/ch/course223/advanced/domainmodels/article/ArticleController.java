@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 @RestController
@@ -24,9 +25,19 @@ public class ArticleController {
         this.articleMapper = articleMapper;
     }
 
+
+    /*
     @PostMapping("/{url}/{messengerUserId}")
     public ResponseEntity<Void> addWithMessengerUserId(@PathVariable String url, @PathVariable String messengerUserId) {
         articleService.addWithMessengerUserId(messengerUserId, url);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+     */
+
+    @PostMapping("/{url}/{principal}")
+    public ResponseEntity<Void> addWithMessengerUserId(@PathVariable String url, @PathVariable Principal principal) {
+        articleService.addWithMessengerUserId(principal, url);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

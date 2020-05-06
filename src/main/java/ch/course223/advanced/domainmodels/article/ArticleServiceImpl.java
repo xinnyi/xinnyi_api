@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -25,10 +26,24 @@ public class ArticleServiceImpl extends ExtendedServiceImpl<Article> implements 
         super(repository);
     }
 
+    /*
     @Override
     public void addWithMessengerUserId(String messengerUserId, String url) {
         try {
             User user = userService.findByDevices(messengerUserId);
+            this.addWithUserId(user.getId(), url);
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException("Your Telegram Account is not yet linked to an Account.");
+            // throw new TelegramExeception("Your Telegram Account is not yet linked to an Account.");
+        }
+    }
+
+     */
+
+    @Override
+    public void addWithMessengerUserId(Principal principal, String url) {
+        try {
+            User user = userService.findByEmail(principal.getName());
             this.addWithUserId(user.getId(), url);
         } catch (NoSuchElementException e) {
             throw new NoSuchElementException("Your Telegram Account is not yet linked to an Account.");
