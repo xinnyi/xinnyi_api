@@ -26,20 +26,6 @@ public class ArticleServiceImpl extends ExtendedServiceImpl<Article> implements 
         super(repository);
     }
 
-    /*
-    @Override
-    public void addWithMessengerUserId(String messengerUserId, String url) {
-        try {
-            User user = userService.findByDevices(messengerUserId);
-            this.addWithUserId(user.getId(), url);
-        } catch (NoSuchElementException e) {
-            throw new NoSuchElementException("Your Telegram Account is not yet linked to an Account.");
-            // throw new TelegramExeception("Your Telegram Account is not yet linked to an Account.");
-        }
-    }
-
-     */
-
     @Override
     public void addWithMessengerUserId(Principal principal, String url) {
         try {
@@ -47,7 +33,6 @@ public class ArticleServiceImpl extends ExtendedServiceImpl<Article> implements 
             this.addWithUserId(user.getId(), url);
         } catch (NoSuchElementException e) {
             throw new NoSuchElementException("Your Telegram Account is not yet linked to an Account.");
-            // throw new TelegramExeception("Your Telegram Account is not yet linked to an Account.");
         }
     }
 
