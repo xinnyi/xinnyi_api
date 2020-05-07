@@ -15,16 +15,13 @@ public class Article {
 
     private String userId;
 
-    private String title;
-
     private String article;
 
     private Timestamp timestamp;
 
-    public Article(String id, String userId, String title, String article, Timestamp timestamp) {
+    public Article(String id, String userId, String article, Timestamp timestamp) {
         this.id = id;
         this.userId = userId;
-        this.title = title;
         this.article = article;
         this.timestamp = timestamp;
     }
@@ -38,15 +35,6 @@ public class Article {
 
     public Article setId(String id) {
         this.id = id;
-        return this;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Article setTitle(String title) {
-        this.title = title;
         return this;
     }
 
