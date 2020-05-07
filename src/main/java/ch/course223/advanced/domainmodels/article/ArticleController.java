@@ -31,12 +31,12 @@ public class ArticleController {
     }
 
     @GetMapping("/{search}")
-    public ResponseEntity<List<ArticleDTO>> findArticlesByTitle(@PathVariable String search){
+    public ResponseEntity<List<ArticleDTO>> findArticlesByArticle(@PathVariable String search){
         return new ResponseEntity<>(articleMapper.toDTOs(articleService.searchArticle(search)), HttpStatus.OK);
     }
 
     @GetMapping("/inverted/{search}")
-    public ResponseEntity<List<ArticleDTO>> reverseSearchTitle(@PathVariable String search){
+    public ResponseEntity<List<ArticleDTO>> reverseSearchArticle(@PathVariable String search){
         return new ResponseEntity<>(articleMapper.toDTOs(articleService.reverseSearchArticle(search)), HttpStatus.OK);
     }
 
