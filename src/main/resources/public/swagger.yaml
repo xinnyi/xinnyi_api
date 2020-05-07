@@ -1,0 +1,53 @@
+swagger: '2.0'
+info:
+  description: 'Documentation for an API'
+  version: '1.0'
+  title: 'API documentation'
+  contact:
+    name: 'Amin Haidar'
+    email: 'haidar@noseryoung.com'
+host: 'localhost:8080'
+basePath: /
+tags:
+  - name: 'MessengerController'
+    description: 'Endpoints for the messenger'
+  - name: 'DevicelinkingtokenController'
+    description: 'Endpoint to create a devicelinkingtoken'
+
+/paths:
+  # Messenger
+  /messenger/{url}/{userMessengerId}:
+    post:
+      tags:
+        - MessengerController
+      summary: Adds a new article to the queue
+      responses:
+        201:
+          description: Created
+        403:
+          description: Forbidden
+
+/messenger/{messengerUserId}/{deviceLinkingToken}:
+  post:
+    tags:
+      - MessengerController
+    summary: Links device to user
+    responses:
+      201:
+        description: Created
+      403:
+        description: Forbidden
+
+# DeviceLinkingToken
+/devicelinkingtoken/{userId}:
+  post:
+    tags:
+      - DeviceLinkingTokenController
+    summary: Creates a device linking token
+    produces:
+      - application/json
+    responses:
+      201:
+        description: Created
+      403:
+        description: Forbidden
