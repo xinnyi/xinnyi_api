@@ -1,4 +1,3 @@
-
 package ch.course223.advanced.domainmodels.devicelinkingtoken;
 
 import ch.course223.advanced.core.ExtendedService;
