@@ -1,46 +1,58 @@
 package ch.course223.advanced.domainmodels.article;
 
-import ch.course223.advanced.config.RabbitMqService;
-import ch.course223.advanced.core.ExtendedJpaRepository;
-import ch.course223.advanced.core.ExtendedServiceImpl;
-import ch.course223.advanced.domainmodels.user.User;
-import ch.course223.advanced.domainmodels.user.UserService;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.elasticsearch.index.query.Operator.AND;
+import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 
 @Service
-public class ArticleServiceImpl extends ExtendedServiceImpl<Article> implements ArticleService{
+public class ArticleServiceImpl implements ArticleService {
 
-
-    private UserService userService;
-    private RabbitMqService rabbitMqService;
+    private ArticleRepository articleRepository;
 
     @Autowired
-    public ArticleServiceImpl(ExtendedJpaRepository<Article> repository) {
-        super(repository);
+    public ArticleServiceImpl(ArticleRepository articleRepository) {
+        this.articleRepository = articleRepository;
     }
 
     @Override
-    public void addWithMessengerUserId(Principal principal, String url) {
-        try {
-            User user = userService.findByEmail(principal.getName());
-            this.addWithUserId(user.getId(), url);
-        } catch (NoSuchElementException e) {
-            throw new NoSuchElementException("Your Telegram Account is not yet linked to an Account.");
-        }
+    public List<Article> findAll() {
+        List<Article> articleList = new LinkedList<>();
+        articleRepository.findAll().forEach(articleList::add);
+        return articleList;
     }
 
     @Override
-    public void addWithUserId(String userId, String url) {
-        Map<String, String> payload = new HashMap<>();
-        Gson gson = new Gson();
-        payload.put("userId", userId);
-        rabbitMqService.publishToQueue(RabbitMqService.ARTICLE_QUEUE, gson.toJson(payload));
+    public Article save(Article article) {
+        return articleRepository.save(article);
+    }
+
+    @Override
+    public void deleteArticle(String id) {
+        articleRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Article> searchArticle(String search) {
+        return articleRepository.findByArticle(search);
+    }
+
+    @Override
+    public List<Article> reverseSearchArticle(String search) {
+        List<Article> reversedSearch = new LinkedList<>();
+
+        articleRepository.findAll().forEach(article -> {
+            if(!(article.getArticle().toLowerCase()).contains(search.toLowerCase())){
+                reversedSearch.add(article);
+            }
+        });
+
+        return reversedSearch;
     }
 }

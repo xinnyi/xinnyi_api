@@ -1,8 +1,9 @@
 package ch.course223.advanced.domainmodels.article;
 
-import ch.course223.advanced.core.ExtendedJpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
-@Repository
-public interface ArticleRepository extends ExtendedJpaRepository<Article> {
+import java.util.List;
+
+public interface ArticleRepository extends ElasticsearchRepository<Article, String> {
+    List<Article> findByArticle(String title);
 }

@@ -1,53 +1,61 @@
 package ch.course223.advanced.domainmodels.article;
 
-import ch.course223.advanced.core.ExtendedDTO;
-import ch.course223.advanced.domainmodels.device.Device;
-import ch.course223.advanced.domainmodels.user.User;
+import ch.course223.advanced.validation.notnull.NotNull;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
-
-public class ArticleDTO extends ExtendedDTO {
+public class ArticleDTO {
+    private String id;
 
     private String userId;
 
-    private String url;
+    private String article;
 
-    private Device device;
+    private Timestamp timestamp;
 
-    public ArticleDTO(){}
-
-    public ArticleDTO(String id) {
-        super(id);
+    public ArticleDTO(String id, String userId, String article, Timestamp timestamp) {
+        this.id = id;
+        this.userId = userId;
+        this.article = article;
+        this.timestamp = timestamp;
     }
 
-    public ArticleDTO(String userId, String url, Device device) {
-        this.userId = userId;
-        this.url = url;
-        this.device = device;
+    public ArticleDTO() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public ArticleDTO setId(String id) {
+        this.id = id;
+        return this;
     }
 
     public String getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public ArticleDTO setUserId(String userId) {
         this.userId = userId;
+        return this;
     }
 
-    public String getUrl() {
-        return url;
+    public String getArticle() {
+        return article;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public ArticleDTO setArticle(String article) {
+        this.article = article;
+        return this;
     }
 
-    public Device getDevice() {
-        return device;
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
-    public void setDevice(Device device) {
-        this.device = device;
+    public ArticleDTO setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+        return this;
     }
 }
