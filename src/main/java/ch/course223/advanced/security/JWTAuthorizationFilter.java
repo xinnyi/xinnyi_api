@@ -1,5 +1,7 @@
 package ch.course223.advanced.security;
 
+import ch.course223.advanced.domainmodels.devicelinkingtoken.DeviceLinkingToken;
+import ch.course223.advanced.domainmodels.devicelinkingtoken.DeviceLinkingTokenService;
 import ch.course223.advanced.domainmodels.user.UserDetailsImpl;
 import ch.course223.advanced.domainmodels.user.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -17,43 +19,45 @@ import java.io.IOException;
 
 class JWTAuthorizationFilter extends OncePerRequestFilter {
 
-	private UserService userService;
-	
-	private PropertyReader propertyReader;
+    private UserService userService;
+    private DeviceLinkingTokenService deviceLinkingTokenService;
 
-	JWTAuthorizationFilter(UserService userService,
-			PropertyReader propertyReader) {
-		this.userService = userService;
-		this.propertyReader = propertyReader;
-	}
+    private PropertyReader propertyReader;
 
-	@Override
-	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
-			throws IOException, ServletException {
-		String header = req.getHeader(propertyReader.getStringProperty("jwt.header-string"));
-		if (header != null && header.startsWith(propertyReader.getStringProperty("jwt.token-prefix"))) {
-			SecurityContextHolder.getContext().setAuthentication(getAuthentication(req, header));
-		}
-		chain.doFilter(req, res);
-	}
+    JWTAuthorizationFilter(UserService userService, DeviceLinkingTokenService deviceLinkingTokenService, PropertyReader propertyReader) {
+        this.userService = userService;
+        this.deviceLinkingTokenService = deviceLinkingTokenService;
+        this.propertyReader = propertyReader;
+    }
 
-	private Authentication getAuthentication(HttpServletRequest req, String header) {
-		String subject;
+    @Override
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
+        String header = req.getHeader(propertyReader.getStringProperty("jwt.header-string"));
+        if (header != null && header.startsWith(propertyReader.getStringProperty("jwt.token-prefix"))) {
+            SecurityContextHolder.getContext().setAuthentication(getAuthentication(req, header));
+        }
+        chain.doFilter(req, res);
+    }
 
-		try {
-			subject = Jwts.parser()
-					.setSigningKey(propertyReader.getStringProperty("jwt.secret").getBytes())
-					.parseClaimsJws(header.replace(propertyReader.getStringProperty("jwt.token-prefix"), "")).getBody()
-					.getSubject();
-		} catch (ExpiredJwtException ex) {
-			return null;
-		}
-		
-		if (subject != null) {
-			UserDetailsImpl userDetails = new UserDetailsImpl(userService.findById(subject));
-			return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-		}
-		return null;
-	}
+    private Authentication getAuthentication(HttpServletRequest req, String header) {
+        try {
+            String subject = Jwts.parser()
+                    .setSigningKey(propertyReader.getStringProperty("jwt.secret").getBytes())
+                    .parseClaimsJws(header.replace(propertyReader.getStringProperty("jwt.token-prefix"), "")).getBody()
+                    .getSubject();
+
+            if (userService.findById(subject) != null) {
+                DeviceLinkingToken deviceLinkingToken = deviceLinkingTokenService.findById(req.getHeader("userid"));
+                UserDetailsImpl userDetails = new UserDetailsImpl(deviceLinkingToken.getUser());
+                return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            }
+        } catch (ExpiredJwtException ex) {
+            return null;
+        }
+
+
+        return null;
+    }
 
 }

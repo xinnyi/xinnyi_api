@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/main/java/ch/course223/advanced/domainmodels/dvicelinkingtoken/DeviceLinkingToken.java
 package ch.course223.advanced.domainmodels.dvicelinkingtoken;
+=======
+package ch.course223.advanced.domainmodels.devicelinkingtoken;
+>>>>>>> develop:src/main/java/ch/course223/advanced/domainmodels/devicelinkingtoken/DeviceLinkingToken.java
 
 import ch.course223.advanced.core.ExtendedEntity;
 import ch.course223.advanced.domainmodels.user.User;
@@ -22,7 +26,7 @@ public class DeviceLinkingToken extends ExtendedEntity {
     @Column(name = "token_expiration_date")
     private LocalDate tokenExpirationDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 

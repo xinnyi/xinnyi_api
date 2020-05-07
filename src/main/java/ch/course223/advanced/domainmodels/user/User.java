@@ -1,12 +1,14 @@
 package ch.course223.advanced.domainmodels.user;
 
 import ch.course223.advanced.core.ExtendedEntity;
+import ch.course223.advanced.domainmodels.device.Device;
 import ch.course223.advanced.domainmodels.role.Role;
 import ch.course223.advanced.validation.notnull.NotNull;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -47,6 +49,10 @@ public class User extends ExtendedEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Column (name = "devices")
+    private List<Device> devices;
 
     public User(String id) {
         super(id);
@@ -134,6 +140,15 @@ public class User extends ExtendedEntity {
 
     public User setRoles(Set<Role> roles) {
         this.roles = roles;
+        return this;
+    }
+
+    public List<Device> getDevices() {
+        return devices;
+    }
+
+    public User setDevices(List<Device> devices) {
+        this.devices = devices;
         return this;
     }
 }
