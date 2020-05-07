@@ -1,15 +1,10 @@
 package ch.course223.advanced.domainmodels.article;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.elasticsearch.index.query.Operator.AND;
-import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {

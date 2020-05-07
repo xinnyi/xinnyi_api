@@ -1,7 +1,5 @@
 package ch.course223.advanced.domainmodels.article;
 
-import ch.course223.advanced.validation.notnull.NotNull;
-
 import java.sql.Timestamp;
 
 public class ArticleDTO {

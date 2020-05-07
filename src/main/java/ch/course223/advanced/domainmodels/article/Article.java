@@ -1,12 +1,9 @@
 package ch.course223.advanced.domainmodels.article;
 
-import ch.course223.advanced.validation.notnull.NotNull;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-import javax.persistence.Column;
 import javax.persistence.Id;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 @Document(indexName = "article", type = "article")
 public class Article {
