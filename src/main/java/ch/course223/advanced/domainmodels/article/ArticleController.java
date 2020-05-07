@@ -20,13 +20,28 @@ public class ArticleController {
         this.articleMapper = articleMapper;
     }
 
+    @GetMapping("")
+    public ResponseEntity<List<ArticleDTO>> findAll(){
+        return new ResponseEntity<>(articleMapper.toDTOs(articleService.findAll()), HttpStatus.OK);
+    }
+
     @PostMapping("")
     public ResponseEntity<ArticleDTO> save(@RequestBody ArticleDTO articleDTO) {
         return new ResponseEntity<>(articleMapper.toDTO(articleService.save(articleMapper.fromDTO(articleDTO))), HttpStatus.CREATED);
     }
 
     @GetMapping("/{search}")
-    public ResponseEntity<List<ArticleDTO>> findArticleByTitle(@PathVariable String search){
+    public ResponseEntity<List<ArticleDTO>> findArticlesByTitle(@PathVariable String search){
         return new ResponseEntity<>(articleMapper.toDTOs(articleService.findByTitle(search)), HttpStatus.OK);
+    }
+
+    @GetMapping("/inverted/{search}")
+    public ResponseEntity<List<ArticleDTO>> reverseSearchTitle(@PathVariable String search){
+        return new ResponseEntity<>(articleMapper.toDTOs(articleService.reverseSearchTitle(search)), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteArticleById(@PathVariable String id){
+        articleService.deleteArticle(id);
     }
 }
