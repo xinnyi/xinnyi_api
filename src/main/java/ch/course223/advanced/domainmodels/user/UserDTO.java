@@ -1,6 +1,7 @@
 package ch.course223.advanced.domainmodels.user;
 
 import ch.course223.advanced.core.ExtendedDTO;
+import ch.course223.advanced.domainmodels.device.DeviceDTO;
 import ch.course223.advanced.domainmodels.role.RoleDTO;
 import ch.course223.advanced.validation.notnull.NotNull;
 
@@ -16,6 +17,8 @@ public class UserDTO extends ExtendedDTO {
 
     private Set<RoleDTO> roles;
 
+    private Set<DeviceDTO> devices;
+
     public UserDTO() {
     }
 
@@ -23,11 +26,13 @@ public class UserDTO extends ExtendedDTO {
         super(id);
     }
 
-    public UserDTO(String firstName, String lastName, String email, Set<RoleDTO> roles) {
+
+    public UserDTO(String firstName, String lastName, String email, Set<RoleDTO> roles, Set<DeviceDTO> devices) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.roles = roles;
+        this.devices = devices;
     }
 
     public String getFirstName() {
@@ -66,4 +71,11 @@ public class UserDTO extends ExtendedDTO {
         return this;
     }
 
+    public Set<DeviceDTO> getDevices() {
+        return devices;
+    }
+
+    public void setDevices(Set<DeviceDTO> devices) {
+        this.devices = devices;
+    }
 }

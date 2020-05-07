@@ -2,6 +2,8 @@ package ch.course223.advanced.domainmodels.user.mapper;
 
 import ch.course223.advanced.domainmodels.authority.Authority;
 import ch.course223.advanced.domainmodels.authority.AuthorityDTO;
+import ch.course223.advanced.domainmodels.device.Device;
+import ch.course223.advanced.domainmodels.device.DeviceDTO;
 import ch.course223.advanced.domainmodels.role.Role;
 import ch.course223.advanced.domainmodels.role.RoleDTO;
 import ch.course223.advanced.domainmodels.user.User;
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-07T09:27:32+0200",
+    date = "2020-05-06T15:46:26+0200",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11.0.2 (Oracle Corporation)"
 )
 @Component
@@ -34,6 +36,7 @@ public class UserMapperImpl implements UserMapper {
         user.setLastName( dto.getLastName() );
         user.setEmail( dto.getEmail() );
         user.setRoles( roleDTOSetToRoleSet( dto.getRoles() ) );
+        user.setDevices( deviceDTOSetToDeviceList( dto.getDevices() ) );
 
         return user;
     }
@@ -79,6 +82,7 @@ public class UserMapperImpl implements UserMapper {
         userDTO.setLastName( dm.getLastName() );
         userDTO.setEmail( dm.getEmail() );
         userDTO.setRoles( roleSetToRoleDTOSet( dm.getRoles() ) );
+        userDTO.setDevices( deviceListToDeviceDTOSet( dm.getDevices() ) );
 
         return userDTO;
     }
@@ -164,6 +168,32 @@ public class UserMapperImpl implements UserMapper {
         return set1;
     }
 
+    protected Device deviceDTOToDevice(DeviceDTO deviceDTO) {
+        if ( deviceDTO == null ) {
+            return null;
+        }
+
+        Device device = new Device();
+
+        device.setId( deviceDTO.getId() );
+        device.setCreatedAt( deviceDTO.getCreatedAt() );
+
+        return device;
+    }
+
+    protected List<Device> deviceDTOSetToDeviceList(Set<DeviceDTO> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        List<Device> list = new ArrayList<Device>( set.size() );
+        for ( DeviceDTO deviceDTO : set ) {
+            list.add( deviceDTOToDevice( deviceDTO ) );
+        }
+
+        return list;
+    }
+
     protected AuthorityDTO authorityToAuthorityDTO(Authority authority) {
         if ( authority == null ) {
             return null;
@@ -215,5 +245,31 @@ public class UserMapperImpl implements UserMapper {
         }
 
         return set1;
+    }
+
+    protected DeviceDTO deviceToDeviceDTO(Device device) {
+        if ( device == null ) {
+            return null;
+        }
+
+        DeviceDTO deviceDTO = new DeviceDTO();
+
+        deviceDTO.setId( device.getId() );
+        deviceDTO.setCreatedAt( device.getCreatedAt() );
+
+        return deviceDTO;
+    }
+
+    protected Set<DeviceDTO> deviceListToDeviceDTOSet(List<Device> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        Set<DeviceDTO> set = new HashSet<DeviceDTO>( Math.max( (int) ( list.size() / .75f ) + 1, 16 ) );
+        for ( Device device : list ) {
+            set.add( deviceToDeviceDTO( device ) );
+        }
+
+        return set;
     }
 }

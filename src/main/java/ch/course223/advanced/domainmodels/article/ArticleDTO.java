@@ -1,61 +1,53 @@
 package ch.course223.advanced.domainmodels.article;
 
-import ch.course223.advanced.validation.notnull.NotNull;
+import ch.course223.advanced.core.ExtendedDTO;
+import ch.course223.advanced.domainmodels.device.Device;
+import ch.course223.advanced.domainmodels.user.User;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
-public class ArticleDTO {
-    private String id;
+
+public class ArticleDTO extends ExtendedDTO {
 
     private String userId;
 
-    private String article;
+    private String url;
 
-    private Timestamp timestamp;
+    private Device device;
 
-    public ArticleDTO(String id, String userId, String article, Timestamp timestamp) {
-        this.id = id;
+    public ArticleDTO(){}
+
+    public ArticleDTO(String id) {
+        super(id);
+    }
+
+    public ArticleDTO(String userId, String url, Device device) {
         this.userId = userId;
-        this.article = article;
-        this.timestamp = timestamp;
-    }
-
-    public ArticleDTO() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public ArticleDTO setId(String id) {
-        this.id = id;
-        return this;
+        this.url = url;
+        this.device = device;
     }
 
     public String getUserId() {
         return userId;
     }
 
-    public ArticleDTO setUserId(String userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
-        return this;
     }
 
-    public String getArticle() {
-        return article;
+    public String getUrl() {
+        return url;
     }
 
-    public ArticleDTO setArticle(String article) {
-        this.article = article;
-        return this;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
+    public Device getDevice() {
+        return device;
     }
 
-    public ArticleDTO setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
-        return this;
+    public void setDevice(Device device) {
+        this.device = device;
     }
 }

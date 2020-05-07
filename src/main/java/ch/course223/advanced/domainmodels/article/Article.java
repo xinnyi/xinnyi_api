@@ -1,67 +1,66 @@
 package ch.course223.advanced.domainmodels.article;
 
-import ch.course223.advanced.validation.notnull.NotNull;
-import org.springframework.data.elasticsearch.annotations.Document;
+import ch.course223.advanced.core.ExtendedEntity;
+import ch.course223.advanced.domainmodels.device.Device;
+import ch.course223.advanced.domainmodels.user.User;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import javax.persistence.*;
+import java.time.LocalDate;
 
-@Document(indexName = "article", type = "article")
-public class Article {
-    @Id
-    private String id;
+@Entity
+@Table(name = "article")
+public class Article extends ExtendedEntity {
 
+    @Column(name = "user_id")
     private String userId;
 
-    private String article;
+    @Column(name = "url")
+    private String url;
 
-    private Timestamp timestamp;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Device device;
 
-    public Article(String id, String userId, String article, Timestamp timestamp) {
-        this.id = id;
+    @Column (name = "timestamp")
+    private LocalDate timestamp;
+
+    public Article(){}
+
+    public Article(String userId, String url, Device device, LocalDate timestamp) {
         this.userId = userId;
-        this.article = article;
+        this.url = url;
+        this.device = device;
         this.timestamp = timestamp;
-    }
-
-    public Article() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public Article setId(String id) {
-        this.id = id;
-        return this;
     }
 
     public String getUserId() {
         return userId;
     }
 
-    public Article setUserId(String userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
-        return this;
     }
 
-    public String getArticle() {
-        return article;
+    public String getUrl() {
+        return url;
     }
 
-    public Article setArticle(String article) {
-        this.article = article;
-        return this;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public Timestamp getTimestamp() {
+    public Device getDevice() {
+        return device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
+    }
+
+    public LocalDate getTimestamp() {
         return timestamp;
     }
 
-    public Article setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(LocalDate timestamp) {
         this.timestamp = timestamp;
-        return this;
     }
 }
