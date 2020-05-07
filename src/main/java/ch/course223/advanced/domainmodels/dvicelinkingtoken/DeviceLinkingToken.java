@@ -1,5 +1,8 @@
-
+<<<<<<< HEAD:src/main/java/ch/course223/advanced/domainmodels/dvicelinkingtoken/DeviceLinkingToken.java
+package ch.course223.advanced.domainmodels.dvicelinkingtoken;
+=======
 package ch.course223.advanced.domainmodels.devicelinkingtoken;
+>>>>>>> develop:src/main/java/ch/course223/advanced/domainmodels/devicelinkingtoken/DeviceLinkingToken.java
 
 import ch.course223.advanced.core.ExtendedEntity;
 import ch.course223.advanced.domainmodels.user.User;

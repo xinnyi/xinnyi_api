@@ -1,5 +1,8 @@
-
+<<<<<<< HEAD:src/main/java/ch/course223/advanced/domainmodels/dvicelinkingtoken/DeviceLinkingTokenServiceImpl.java
+package ch.course223.advanced.domainmodels.dvicelinkingtoken;
+=======
 package ch.course223.advanced.domainmodels.devicelinkingtoken;
+>>>>>>> develop:src/main/java/ch/course223/advanced/domainmodels/devicelinkingtoken/DeviceLinkingTokenServiceImpl.java
 
 import ch.course223.advanced.core.ExtendedJpaRepository;
 import ch.course223.advanced.core.ExtendedServiceImpl;
