@@ -3,6 +3,7 @@ package ch.course223.advanced.domainmodels.devicelinkingtoken.mapper;
 import ch.course223.advanced.core.ExtendedDTOMapper;
 import ch.course223.advanced.domainmodels.devicelinkingtoken.DeviceLinkingToken;
 import ch.course223.advanced.domainmodels.devicelinkingtoken.DeviceLinkingTokenDTO;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

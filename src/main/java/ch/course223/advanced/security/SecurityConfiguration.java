@@ -1,5 +1,6 @@
 package ch.course223.advanced.security;
 
+import ch.course223.advanced.domainmodels.devicelinkingtoken.DeviceLinkingTokenService;
 import ch.course223.advanced.domainmodels.user.UserService;
 import ch.course223.advanced.domainmodels.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,76 +19,78 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-	
-	private UserService userService;
-	
-	private BCryptPasswordEncoder pwEncoder;
-	
-	private PropertyReader propertyReader;
 
-	private UserMapper userMapper;
+    private UserService userService;
+    private DeviceLinkingTokenService deviceLinkingTokenService;
 
-	@Autowired
-	public SecurityConfiguration(
-			UserService userService,
-			BCryptPasswordEncoder pwEncoder,
-			UserMapper userMapper
-	) {
-		super();
-		this.userService = userService;
-		this.pwEncoder = pwEncoder;
-		this.userMapper = userMapper;
-	}
+    private BCryptPasswordEncoder pwEncoder;
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userService).passwordEncoder(pwEncoder);
-	}
+    private PropertyReader propertyReader;
 
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
+    private UserMapper userMapper;
 
-	@Bean
-	public CorsConfigurationSource corsConfigurationSource() {
-		final CorsConfiguration configuration = new CorsConfiguration();
-		//configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080","http://localhost:8084")); Will be used at a later stage to only allow NOA Frontend to access our API
-		configuration.setAllowedOrigins(Arrays.asList("*"));
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-		configuration.setAllowCredentials(true);
-		configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration);
-		return source;
-	}
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+    @Autowired
+    public SecurityConfiguration(
+            UserService userService,
+            DeviceLinkingTokenService deviceLinkingTokenService,
+            BCryptPasswordEncoder pwEncoder,
+            UserMapper userMapper
+    ) throws IOException {
+        super();
+        this.userService = userService;
+        this.deviceLinkingTokenService = deviceLinkingTokenService;
+        this.pwEncoder = pwEncoder;
+        this.userMapper = userMapper;
 		propertyReader = new PropertyReader("jwt.properties");
-
-		http.cors().and().csrf().disable().
-				authorizeRequests()
-				.antMatchers("/welcome", "/login", "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html",
-						"/webjars/**", "/swagger.yaml", "/**")
-				.permitAll()
-				.anyRequest().authenticated().and()
-				.addFilterAfter(
-						new JWTAuthenticationFilter(
-								new AntPathRequestMatcher("/login", "POST"),
-								authenticationManagerBean(),
-								propertyReader,
-								userMapper)
-						, UsernamePasswordAuthenticationFilter.class)
-				.addFilterAfter(
-						new JWTAuthorizationFilter(userService, propertyReader), UsernamePasswordAuthenticationFilter.class)
-				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
-	
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(pwEncoder);
+    }
+
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        final CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList(propertyReader.getStringProperty("jwt.header-string"), "userid", "Cache-Control", "Content-Type"));
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors().and().csrf().disable()
+                .authorizeRequests()
+                .antMatchers( "/login", "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html",
+                        "/webjars/**", "/swagger.yaml", "/**")
+                .permitAll()
+                .anyRequest().authenticated().and()
+                .addFilterAfter(
+                        new JWTAuthenticationFilter(
+                                new AntPathRequestMatcher("/login", "POST"),
+                                authenticationManagerBean(),
+                                propertyReader,
+                                userMapper)
+                        , UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(
+                        new JWTAuthorizationFilter(userService,deviceLinkingTokenService, propertyReader), UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    }
+
 }

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-04-22T15:33:02+0200",
-    comments = "version: 1.3.0.Final, compiler: javac, environment: Java 13.0.2 (Oracle Corporation)"
+    date = "2020-05-07T09:27:32+0200",
+    comments = "version: 1.3.0.Final, compiler: javac, environment: Java 11.0.2 (Oracle Corporation)"
 )
 @Component
 public class AuthorityMapperExtendedImpl implements AuthorityMapperExtended {
