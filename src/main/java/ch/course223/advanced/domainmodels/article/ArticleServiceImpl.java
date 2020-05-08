@@ -25,23 +25,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> findAll() {
-        List<Article> articleList = new LinkedList<>();
-        articleRepository.findAll().forEach(articleList::add);
-        return articleList;
-    }
-
-    @Override
-    public Article save(Article article) {
-        return articleRepository.save(article);
-    }
-
-    @Override
-    public void deleteArticle(String id) {
-        articleRepository.deleteById(id);
-    }
-
-    @Override
     public List<Article> getArticlesByUserId(String userId) {
         return articleRepository.findAllByUserId(userId);
     }
