@@ -3,6 +3,7 @@ package ch.course223.advanced.domainmodels.devicelinkingtoken;
 
 import ch.course223.advanced.core.ExtendedJpaRepository;
 import ch.course223.advanced.core.ExtendedServiceImpl;
+import ch.course223.advanced.domainmodels.user.UserRepository;
 import ch.course223.advanced.domainmodels.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +15,16 @@ import java.util.Optional;
 @Service
 public class DeviceLinkingTokenServiceImpl extends ExtendedServiceImpl<DeviceLinkingToken> implements DeviceLinkingTokenService {
 
-    @Autowired
     private UserServiceImpl userService;
 
+    @Autowired
     public DeviceLinkingTokenServiceImpl(ExtendedJpaRepository<DeviceLinkingToken> repository) {
         super(repository);
+    }
+
+    @Override
+    public boolean existsByToken(String token) {
+        return ((DeviceLinkingTokenRepository)repository).existsByToken(token);
     }
 
     @Override

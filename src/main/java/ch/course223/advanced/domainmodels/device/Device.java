@@ -16,7 +16,7 @@ public class Device extends ExtendedEntity {
     @Column (name = "created_at")
     private LocalDate createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User user;
 
     public Device() {}

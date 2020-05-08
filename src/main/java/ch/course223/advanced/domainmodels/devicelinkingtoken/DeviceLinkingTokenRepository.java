@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface DeviceLinkingTokenRepository extends ExtendedJpaRepository<DeviceLinkingToken> {
     Optional<DeviceLinkingToken> findByUserId(String id);
+    boolean existsByToken(String token);
+
 }

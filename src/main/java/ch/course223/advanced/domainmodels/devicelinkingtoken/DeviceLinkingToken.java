@@ -9,14 +9,12 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "device_linking_token")
 public class DeviceLinkingToken extends ExtendedEntity {
 
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Generated(GenerationTime.ALWAYS)
     @Column(name = "token")
     private String token;
 
@@ -30,7 +28,7 @@ public class DeviceLinkingToken extends ExtendedEntity {
     public DeviceLinkingToken(User user) {
         this.user = user;
         this.tokenExpirationDate = LocalDate.now().plusDays(1);
-
+        this.token = UUID.randomUUID().toString();
     }
 
     public DeviceLinkingToken() {

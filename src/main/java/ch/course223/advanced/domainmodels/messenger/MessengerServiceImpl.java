@@ -37,7 +37,7 @@ public class MessengerServiceImpl implements MessengerService {
         if (deviceLinkingTokenService.existsById(deviceLinkingToken)) {
             User userToLink = deviceLinkingTokenService.findById(deviceLinkingToken).getUser();
             List<Device> currentDevices = userToLink.getDevices();
-            currentDevices.add(new Device(messengerUserId, LocalDate.now()));
+            currentDevices.add(new Device(messengerUserId, LocalDate.now(), userToLink));
             userToLink.setDevices(currentDevices);
             userService.updateById(userToLink.getId(), userToLink);
         } else {

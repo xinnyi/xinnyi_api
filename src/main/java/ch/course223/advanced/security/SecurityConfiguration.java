@@ -1,5 +1,6 @@
 package ch.course223.advanced.security;
 
+import ch.course223.advanced.domainmodels.device.DeviceService;
 import ch.course223.advanced.domainmodels.devicelinkingtoken.DeviceLinkingTokenService;
 import ch.course223.advanced.domainmodels.user.UserService;
 import ch.course223.advanced.domainmodels.user.mapper.UserMapper;
@@ -27,7 +28,7 @@ import java.util.Arrays;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private UserService userService;
-    private DeviceLinkingTokenService deviceLinkingTokenService;
+    private DeviceService deviceService;
 
     private BCryptPasswordEncoder pwEncoder;
 
@@ -38,13 +39,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     public SecurityConfiguration(
             UserService userService,
-            DeviceLinkingTokenService deviceLinkingTokenService,
+            DeviceService deviceService,
             BCryptPasswordEncoder pwEncoder,
             UserMapper userMapper
     ) throws IOException {
         super();
         this.userService = userService;
-        this.deviceLinkingTokenService = deviceLinkingTokenService;
+        this.deviceService = deviceService;
         this.pwEncoder = pwEncoder;
         this.userMapper = userMapper;
 		propertyReader = new PropertyReader("jwt.properties");
@@ -88,7 +89,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                                 userMapper)
                         , UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(
-                        new JWTAuthorizationFilter(userService,deviceLinkingTokenService, propertyReader), UsernamePasswordAuthenticationFilter.class)
+                        new JWTAuthorizationFilter(userService, deviceService, propertyReader), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }

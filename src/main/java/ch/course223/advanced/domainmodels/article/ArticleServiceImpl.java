@@ -5,6 +5,8 @@ import ch.course223.advanced.domainmodels.user.User;
 import ch.course223.advanced.domainmodels.user.UserService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -46,8 +48,9 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void addWithMessengerUserId(Principal principal, String url) {
+    public void addWithMessengerUserId(String url, Principal principal) {
         try {
+            // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User user = userService.findByEmail(principal.getName());
             this.addWithUserId(user.getId(), url);
         } catch (NoSuchElementException e) {
@@ -59,7 +62,8 @@ public class ArticleServiceImpl implements ArticleService {
     public void addWithUserId(String userId, String url) {
         Map<String, String> payload = new HashMap<>();
         Gson gson = new Gson();
-        payload.put("userId", userId);
+        payload.put("userid", userId);
+        payload.put("url", url);
         rabbitMqService.publishToQueue(RabbitMqService.ARTICLE_QUEUE, gson.toJson(payload));
     }
 }

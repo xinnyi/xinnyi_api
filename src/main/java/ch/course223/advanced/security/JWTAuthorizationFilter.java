@@ -1,5 +1,7 @@
 package ch.course223.advanced.security;
 
+import ch.course223.advanced.domainmodels.device.Device;
+import ch.course223.advanced.domainmodels.device.DeviceService;
 import ch.course223.advanced.domainmodels.devicelinkingtoken.DeviceLinkingToken;
 import ch.course223.advanced.domainmodels.devicelinkingtoken.DeviceLinkingTokenService;
 import ch.course223.advanced.domainmodels.user.UserDetailsImpl;
@@ -20,13 +22,13 @@ import java.io.IOException;
 class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private UserService userService;
-    private DeviceLinkingTokenService deviceLinkingTokenService;
+    private DeviceService deviceService;
 
     private PropertyReader propertyReader;
 
-    JWTAuthorizationFilter(UserService userService, DeviceLinkingTokenService deviceLinkingTokenService, PropertyReader propertyReader) {
+    JWTAuthorizationFilter(UserService userService, DeviceService deviceService, PropertyReader propertyReader) {
         this.userService = userService;
-        this.deviceLinkingTokenService = deviceLinkingTokenService;
+        this.deviceService = deviceService;
         this.propertyReader = propertyReader;
     }
 
@@ -48,14 +50,13 @@ class JWTAuthorizationFilter extends OncePerRequestFilter {
                     .getSubject();
 
             if (userService.findById(subject) != null) {
-                DeviceLinkingToken deviceLinkingToken = deviceLinkingTokenService.findById(req.getHeader("userid"));
-                UserDetailsImpl userDetails = new UserDetailsImpl(deviceLinkingToken.getUser());
+                Device device = deviceService.findByMessengerId(req.getHeader("userid"));
+                UserDetailsImpl userDetails = new UserDetailsImpl(device.getUser());
                 return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             }
         } catch (ExpiredJwtException ex) {
             return null;
         }
-
 
         return null;
     }

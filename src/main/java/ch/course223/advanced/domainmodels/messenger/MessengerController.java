@@ -2,7 +2,9 @@ package ch.course223.advanced.domainmodels.messenger;
 
 import ch.course223.advanced.domainmodels.article.ArticleDTO;
 import ch.course223.advanced.domainmodels.article.ArticleService;
+import ch.course223.advanced.domainmodels.article.ArticleURLDTO;
 import ch.course223.advanced.domainmodels.article.mapper.ArticleMapper;
+import ch.course223.advanced.domainmodels.article.mapper.ArticleURLMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +28,13 @@ public class MessengerController {
     this.articleService = articleService;
   }
 
-
-  @PostMapping("/{url}/{principal}")
-  public ResponseEntity<Void> addWithMessengerUserId(@PathVariable String url, @PathVariable Principal principal) {
-    articleService.addWithMessengerUserId(principal, url);
+  @PostMapping("")
+  public ResponseEntity<Void> addWithMessengerUserId(@RequestBody ArticleURLDTO articleURLDTO, Principal principal) {
+    articleService.addWithMessengerUserId(articleURLDTO.getId(), principal);
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
-  @PostMapping({"/{messengerUserId}/{deviceLinkingToken}", "/{messengerUserId}/{deviceLinkingToken}/"})
+  @PostMapping({"/linkdevicetouser/{messengerUserId}/{deviceLinkingToken}"})
   public ResponseEntity<Void> linkDeviceToUser(@PathVariable String messengerUserId, @PathVariable String deviceLinkingToken) {
     messengerServiceImpl.linkDeviceToUser(messengerUserId, deviceLinkingToken);
     return new ResponseEntity<>(HttpStatus.CREATED);
