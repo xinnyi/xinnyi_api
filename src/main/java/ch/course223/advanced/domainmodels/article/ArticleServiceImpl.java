@@ -42,14 +42,19 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> searchArticle(String search) {
-        return articleRepository.findByArticle(search);
+    public List<Article> getArticlesByUserId(String userId) {
+        return articleRepository.findAllByUserId(userId);
     }
 
     @Override
-    public List<Article> reverseSearchArticle(String search) {
+    public List<Article> searchArticle(String userId, String search) {
+        return articleRepository.findByArticleAndUserId(search, userId);
+    }
+
+    @Override
+    public List<Article> reverseSearchArticle(String userId, String search) {
         List<Article> reversedSearch = new LinkedList<>();
-        articleRepository.findAll().forEach(article -> {
+        articleRepository.findAllByUserId(userId).forEach(article -> {
             if (!(article.getArticle().toLowerCase()).contains(search.toLowerCase())) {
                 reversedSearch.add(article);
             }
